@@ -1,1 +1,3 @@
-# Patole_Gauri_002700996
+# Name: Gauri Jaydeep Patole
+# NUID: 002700996
+## Assignment 1
