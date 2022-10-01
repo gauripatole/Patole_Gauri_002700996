@@ -176,6 +176,11 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         BtnDelete.setText("Delete");
+        BtnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeleteActionPerformed(evt);
+            }
+        });
 
         TableEmp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -297,6 +302,21 @@ public class MainFrame extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_BtnCreateActionPerformed
+
+    private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
+        // TODO add your handling code here:
+        int row = TableEmp.getSelectedRow();
+        
+        if (row<0){
+            JOptionPane.showMessageDialog(this, "No row is selected, please select a row", 
+                    "Select Row", JOptionPane.ERROR_MESSAGE);
+     
+        }
+        else { 
+            DefaultTableModel Table1 = (DefaultTableModel) TableEmp.getModel();
+            Table1.removeRow(row);
+        }
+    }//GEN-LAST:event_BtnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
