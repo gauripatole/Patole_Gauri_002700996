@@ -59,6 +59,8 @@ public class MainFrame extends javax.swing.JFrame {
         TxtImageFile = new javax.swing.JTextField();
         javax.swing.JButton BtnCreate = new javax.swing.JButton();
         javax.swing.JButton BtnUpdate = new javax.swing.JButton();
+        LSearch = new javax.swing.JLabel();
+        TxtSearch = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,13 +82,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         LGender.setText("Gender");
 
-        TxtGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        TxtGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male", "Other" }));
 
         LStartDate.setText("StartDate");
 
         LLevel.setText("Level");
 
-        TxtLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        TxtLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", " " }));
 
         LTeamInfo.setText("TeamInfo");
 
@@ -200,6 +202,24 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         BtnUpdate.setText("Update");
+        BtnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnUpdateActionPerformed(evt);
+            }
+        });
+
+        LSearch.setText("Search");
+
+        TxtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtSearchMouseClicked(evt);
+            }
+        });
+        TxtSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -216,13 +236,18 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(TEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(BtnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(TxtImageFile, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(BtnCreate)
                                         .addGap(18, 18, 18)
-                                        .addComponent(BtnUpdate)))
+                                        .addComponent(BtnUpdate))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(BtnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(55, 55, 55)
+                                        .addComponent(LSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(13, 13, 13))
         );
@@ -233,7 +258,10 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(BtnDelete)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BtnDelete)
+                            .addComponent(LSearch)
+                            .addComponent(TxtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67)
@@ -318,6 +346,71 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtnDeleteActionPerformed
 
+    private void BtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnUpdateActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel Table1 = (DefaultTableModel) TableEmp.getModel();
+        if (TableEmp.getSelectedRowCount()==1){
+           
+            //updation for single row
+            String Name = TxtName.getText();
+            String Emp_ID = TxtEmpID.getText();
+            String Age = TxtAge.getText();
+            String Gender = TxtGender.getSelectedItem().toString();
+            String StartDate = TxtStartDate.getText();
+            String Level = TxtLevel.getSelectedItem().toString();
+            String TeamInfo = TxtTeamInfo.getText();
+            String PositionTitle = TxtPosition.getText();
+            String PhoneNo = TxtCellPhone.getText();
+            String Email= TxtEmail.getText();
+            //String Image = image_txt.getText();
+            
+            //Update row from Table
+            Table1.setValueAt(Name, TableEmp.getSelectedRow(),0);
+            Table1.setValueAt(Emp_ID, TableEmp.getSelectedRow(),1);
+            Table1.setValueAt(Age, TableEmp.getSelectedRow(),2);
+            Table1.setValueAt(Gender, TableEmp.getSelectedRow(),3);
+            Table1.setValueAt(StartDate, TableEmp.getSelectedRow(),4);
+            Table1.setValueAt(Level, TableEmp.getSelectedRow(),5);
+            Table1.setValueAt(TeamInfo, TableEmp.getSelectedRow(),6);
+            Table1.setValueAt(PositionTitle, TableEmp.getSelectedRow(),7);
+            Table1.setValueAt(PhoneNo, TableEmp.getSelectedRow(),8);
+            Table1.setValueAt(Email, TableEmp.getSelectedRow(),9);
+            //Table1.setValueAt(Image, TableEmp.getSelectedRow(),10);
+            
+            //message display for update
+            JOptionPane.showMessageDialog(this, "Successfully Updated");
+             } else{
+            if(TableEmp.getRowCount()==0){
+                //for Empty Table
+                JOptionPane.showMessageDialog(this, "Empty Table");
+            }else{
+                //incase row is not selected or multiple selection
+                JOptionPane.showMessageDialog(this, "Please select one row");
+            }
+        }
+        TxtName.setText("");
+        TxtEmpID.setText("");
+        TxtAge.setText("");
+        TxtGender.setSelectedIndex(0);
+        TxtStartDate.setText("");
+        TxtLevel.setSelectedIndex(0);
+        TxtTeamInfo.setText("");
+        TxtPosition.setText("");
+        TxtCellPhone.setText("");
+        TxtEmail.setText("");
+        //Image_txt.setText("");
+        
+    }//GEN-LAST:event_BtnUpdateActionPerformed
+
+    private void TxtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtSearchActionPerformed
+
+    private void TxtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtSearchMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_TxtSearchMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -355,6 +448,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnBrowse;
+    private javax.swing.JLabel LSearch;
     private javax.swing.JTable TableEmp;
     private javax.swing.JTextField TxtAge;
     private javax.swing.JTextField TxtCellPhone;
@@ -365,6 +459,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> TxtLevel;
     private javax.swing.JTextField TxtName;
     private javax.swing.JTextField TxtPosition;
+    private javax.swing.JTextField TxtSearch;
     private javax.swing.JTextField TxtStartDate;
     private javax.swing.JTextField TxtTeamInfo;
     private javax.swing.JPanel jPanel2;
