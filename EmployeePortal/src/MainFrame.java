@@ -1,6 +1,8 @@
 
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -220,6 +222,11 @@ public class MainFrame extends javax.swing.JFrame {
                 TxtSearchActionPerformed(evt);
             }
         });
+        TxtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtSearchKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -408,9 +415,48 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void TxtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtSearchMouseClicked
         // TODO add your handling code here:
+        DefaultTableModel Table1 = (DefaultTableModel) TableEmp.getModel();
+        //set data when row is selected
+        String TableName = Table1.getValueAt(TableEmp.getSelectedRow(),0).toString();
+        String TableEmpID = Table1.getValueAt(TableEmp.getSelectedRow(),1).toString();
+        String TableAge = Table1.getValueAt(TableEmp.getSelectedRow(),2).toString();
+        String TableGender = Table1.getValueAt(TableEmp.getSelectedRow(),3).toString();
+        String TableStartDate = Table1.getValueAt(TableEmp.getSelectedRow(),4).toString();
+        String TableLevel = Table1.getValueAt(TableEmp.getSelectedRow(),5).toString();
+        String TableTeamInfo = Table1.getValueAt(TableEmp.getSelectedRow(),6).toString();
+        String TablePositionTitle = Table1.getValueAt(TableEmp.getSelectedRow(),7).toString();
+        String TableCellNo = Table1.getValueAt(TableEmp.getSelectedRow(),8).toString();
+        String TableEmail = Table1.getValueAt(TableEmp.getSelectedRow(),9).toString();
+        String TableImage = Table1.getValueAt(TableEmp.getSelectedRow(),10).toString();
+        //set to textField
+        
+        TxtName.setText(TableName);
+        TxtEmpID.setText(TableEmpID);
+        TxtAge.setText(TableAge);
+        TxtGender.setSelectedItem(TableGender);
+        TxtStartDate.setText(TableStartDate);
+        TxtLevel.setSelectedItem(TableLevel);
+        TxtTeamInfo.setText(TableTeamInfo);
+        TxtPosition.setText(TablePositionTitle);
+        TxtCellPhone.setText(TableCellNo);
+        TxtEmail.setText(TableEmail);
+        //TxtImage.setText(TableImage);
+        
         
     }//GEN-LAST:event_TxtSearchMouseClicked
 
+    private void TxtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtSearchKeyReleased
+        // TODO add your handling code here:
+        String search = TxtSearch.getText();
+        search(search);
+    }//GEN-LAST:event_TxtSearchKeyReleased
+public void search(String str){
+    DefaultTableModel Table1 = (DefaultTableModel)TableEmp.getModel();
+    TableRowSorter<DefaultTableModel> trs = new TableRowSorter<DefaultTableModel>(Table1);
+    TableEmp.setRowSorter(trs);
+    trs.setRowFilter(RowFilter.regexFilter(str));
+    
+}
     /**
      * @param args the command line arguments
      */
