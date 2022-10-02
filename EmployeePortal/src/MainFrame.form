@@ -234,6 +234,10 @@
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="TxtName">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtNameActionPerformed"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TxtNameKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="LEmpID">
               <Properties>
@@ -256,6 +260,9 @@
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="TxtAge">
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TxtAgeKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="LGender">
               <Properties>
@@ -354,6 +361,9 @@
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="TxtCellPhone">
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TxtCellPhoneKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="LEmail">
               <Properties>

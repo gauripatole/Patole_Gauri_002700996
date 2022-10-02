@@ -1,6 +1,7 @@
 
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -88,9 +89,26 @@ public class MainFrame extends javax.swing.JFrame {
 
         LName.setText("Name");
 
+        TxtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtNameActionPerformed(evt);
+            }
+        });
+        TxtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TxtNameKeyPressed(evt);
+            }
+        });
+
         LEmpID.setText("EmployeeID");
 
         LAge.setText("Age");
+
+        TxtAge.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TxtAgeKeyPressed(evt);
+            }
+        });
 
         LGender.setText("Gender");
 
@@ -107,6 +125,12 @@ public class MainFrame extends javax.swing.JFrame {
         LPosition.setText("Position Title");
 
         LCellPhone.setText("Cell Phone No");
+
+        TxtCellPhone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TxtCellPhoneKeyPressed(evt);
+            }
+        });
 
         LEmail.setText("Email");
 
@@ -501,6 +525,75 @@ public class MainFrame extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_BtnBrowseActionPerformed
+
+    private void TxtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtNameActionPerformed
+
+    private void TxtCellPhoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtCellPhoneKeyPressed
+        // TODO add your handling code here:
+        try{
+            String CellNumber = TxtCellPhone.getText();
+            int length = CellNumber.length();
+            char c = evt.getKeyChar();
+            
+            //check for number 0 to 9
+            if(evt.getKeyChar()>='0' && evt.getKeyChar()<='9'){
+                if(length<10){
+                    TxtCellPhone.setEditable(true);
+                    
+                }else{
+                    TxtCellPhone.setEditable(false);
+                }
+            }else{
+                if(evt.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                    TxtCellPhone.setEditable(true);
+                }else{
+                    TxtCellPhone.setEditable(false);
+                }    
+                
+            }
+        
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }//GEN-LAST:event_TxtCellPhoneKeyPressed
+
+    private void TxtAgeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtAgeKeyPressed
+        // TODO add your handling code here:
+        String CellNumber = TxtAge.getText();
+        int length = CellNumber.length();
+        char c = evt.getKeyChar();
+        
+        if(evt.getKeyChar()>='0' && evt.getKeyChar()<'9'){
+            if(length<2){
+                TxtAge.setEditable(true);
+                
+            }
+            else{ TxtAge.setEditable(false);
+            }
+        }else{
+                if(evt.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE || evt.getExtendedKeyCode()==KeyEvent.VK_DELETE){
+                    TxtAge.setEditable(true);
+                }else{
+                    TxtAge.setEditable(false);
+                }
+                       
+            }
+        
+    
+    }//GEN-LAST:event_TxtAgeKeyPressed
+
+    private void TxtNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNameKeyPressed
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(Character.isLetter(c) || Character.isWhitespace(c) || Character.isISOControl(c)){
+            TxtName.setEditable(true);
+        }else{
+            TxtName.setEditable(false);
+        }
+    }//GEN-LAST:event_TxtNameKeyPressed
 public void search(String str){
     DefaultTableModel Table1 = (DefaultTableModel)TableEmp.getModel();
     TableRowSorter<DefaultTableModel> trs = new TableRowSorter<DefaultTableModel>(Table1);
