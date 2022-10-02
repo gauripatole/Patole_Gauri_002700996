@@ -1,7 +1,17 @@
 
+import java.awt.Component;
+import java.awt.Image;
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
 /*
@@ -101,6 +111,11 @@ public class MainFrame extends javax.swing.JFrame {
         LEmail.setText("Email");
 
         BtnBrowse.setText("Browse Image");
+        BtnBrowse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnBrowseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -191,7 +206,7 @@ public class MainFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "EmpID", "Age", "Gender", "Start Date", "Level", "Team Info", "Position Title", "Cell No", "Email"
+                "Name", "EmpID", "Age", "Gender", "Start Date", "Level", "Team Info", "Position Title", "Cell No", "Email", "imageicon"
             }
         ));
         TEmp.setViewportView(TableEmp);
@@ -240,7 +255,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+                            .addComponent(TEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -311,6 +326,16 @@ public class MainFrame extends javax.swing.JFrame {
         String PositionTitle = TxtPosition.getText();
         String PhoneNo = TxtCellPhone.getText();
         String Email = TxtEmail.getText();
+        String Image = TxtImageFile.getText();
+        
+        TableEmp.getColumn("imageicon").setCellRenderer(new myTableCellRenderer());
+        
+        JLabel ImageLabel = new JLabel();
+        ImageIcon imageicon = new ImageIcon(Image);
+        Image newImage = imageicon.getImage();
+        Image ImageIC = newImage.getScaledInstance(60, 60, newImage.SCALE_SMOOTH);
+        ImageLabel.setIcon(new ImageIcon(ImageIC));
+        
         
         
         if (Name.isEmpty() || Emp_Id.isEmpty() || Age.isEmpty() || Gender.isEmpty() || StartDate.isEmpty() || Level.isEmpty()
@@ -321,7 +346,7 @@ public class MainFrame extends javax.swing.JFrame {
         else{
             DefaultTableModel Table1 = (DefaultTableModel) TableEmp.getModel();
             Table1.addRow(new Object[] {Name, Emp_Id, Age, Gender, StartDate, Level, TeamInfo,
-                PositionTitle, PhoneNo, Email});
+                PositionTitle, PhoneNo, Email,ImageLabel});
             
             TxtName.setText("");
             TxtEmpID.setText("");
@@ -333,11 +358,21 @@ public class MainFrame extends javax.swing.JFrame {
             TxtPosition.setText("");
             TxtCellPhone.setText("");
             TxtEmail.setText("");
-            
+            TxtImageFile.setText("");
         }
         
     }//GEN-LAST:event_BtnCreateActionPerformed
-
+    class myTableCellRenderer implements TableCellRenderer{
+        
+        public Component getTableCellRendererComponent (JTable table, Object value, boolean isSelected, 
+                boolean hasFocus, int row , int column){
+            TableColumn tb = TableEmp.getColumn("imageicon");
+            tb.setMaxWidth(60);
+            TableEmp.setRowHeight(60);
+            return (Component) value;
+                  
+        }
+    }
     private void BtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteActionPerformed
         // TODO add your handling code here:
         int row = TableEmp.getSelectedRow();
@@ -427,7 +462,7 @@ public class MainFrame extends javax.swing.JFrame {
         String TablePositionTitle = Table1.getValueAt(TableEmp.getSelectedRow(),7).toString();
         String TableCellNo = Table1.getValueAt(TableEmp.getSelectedRow(),8).toString();
         String TableEmail = Table1.getValueAt(TableEmp.getSelectedRow(),9).toString();
-        String TableImage = Table1.getValueAt(TableEmp.getSelectedRow(),10).toString();
+        //String TableImage = Table1.getValueAt(TableEmp.getSelectedRow(),10).toString();
         //set to textField
         
         TxtName.setText(TableName);
@@ -450,6 +485,22 @@ public class MainFrame extends javax.swing.JFrame {
         String search = TxtSearch.getText();
         search(search);
     }//GEN-LAST:event_TxtSearchKeyReleased
+
+    private void BtnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBrowseActionPerformed
+        // TODO add your handling code here:
+        JFileChooser browseImageFile = new JFileChooser();
+        FileNameExtensionFilter Fnef = new FileNameExtensionFilter("Image", "png", "jpg", "jpeg");
+        browseImageFile.addChoosableFileFilter(Fnef);
+        int showOpenDialogue = browseImageFile.showOpenDialog(null);
+        if (showOpenDialogue ==JFileChooser.APPROVE_OPTION){
+            File selectedImageFile = browseImageFile.getSelectedFile();
+            String selectedImagePath = selectedImageFile.getAbsolutePath();
+            TxtImageFile.setText(selectedImagePath);
+            JOptionPane.showMessageDialog(null,selectedImagePath);
+            
+            
+        }
+    }//GEN-LAST:event_BtnBrowseActionPerformed
 public void search(String str){
     DefaultTableModel Table1 = (DefaultTableModel)TableEmp.getModel();
     TableRowSorter<DefaultTableModel> trs = new TableRowSorter<DefaultTableModel>(Table1);
